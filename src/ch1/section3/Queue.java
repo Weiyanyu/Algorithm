@@ -1,37 +1,42 @@
-package ch1;
+package ch1.section3;
 
 import java.util.Iterator;
 
-public class Stack<Item> implements Iterable<Item> {
-
+public class Queue<Item> implements Iterable<Item> {
     private class Node {
         Item item;
         Node next;
     }
 
-    private int N = 0;
     private Node first;
+    private Node last;
+    private int N;
+
+    public boolean isEmpty() {
+        return first == null;
+    }
 
     public int size() {
         return N;
     }
 
-    public boolean isEmpty() {
-        return N == 0;
-    }
-
-    public void push(Item item) {
-        Node oldFirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = oldFirst;
+    public void enqueue(Item item) {
+        Node oldLast = last;
+        last = new Node();
+        last.item = item;
+        last.next = null;
         N++;
+        if (isEmpty()) first = last;
+        else {
+            oldLast.next = last;
+        }
     }
 
-    public Item pop() {
+    public Item dequeue() {
         Item item = first.item;
         first = first.next;
         N--;
+        if (isEmpty()) last = null;
         return item;
     }
 
@@ -55,21 +60,23 @@ public class Stack<Item> implements Iterable<Item> {
 
         }
     }
-
     @Override
     public Iterator<Item> iterator() {
         return new ListIterator();
     }
 
     public static void main(String[] args) {
-        Stack<Integer> stack = new Stack<>();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        stack.pop();
+        Queue<Integer> queue = new Queue<>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        queue.dequeue();
 
-        for (Integer i : stack) {
+        for (Integer i : queue) {
             System.out.println(i);
         }
+
+        String s = "yeonon";
+        System.out.println(s.substring(5,6));
     }
 }
