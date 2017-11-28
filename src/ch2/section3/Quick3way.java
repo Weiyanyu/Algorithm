@@ -1,15 +1,27 @@
-package ch2.section1;
+package ch2.section3;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdRandom;
 
-public class InsertSort {
+public class Quick3way {
 
     public static void sort(Comparable[] a) {
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i; j > 0 && less(a[j], a[j-1]); j--) {
-                exch(a, j, j-1);
-            }
+        StdRandom.shuffle(a);
+        sort(a, 0, a.length - 1);
+    }
+
+    private static void sort(Comparable[] a, int lo, int hi) {
+        if (lo >= hi) return;
+        int lt = lo, i = lo + 1, gt = hi;
+        Comparable v = a[lo];
+        while (i <= gt) {
+            int cmp = a[i].compareTo(v);
+            if (cmp < 0) exch(a, i++, lt++);
+            else if (cmp > 0) exch(a, gt--, i);
+            else i++;
         }
+        sort(a, lo, lt - 1);
+        sort(a, gt + 1, hi);
     }
 
     private static void exch(Comparable[] a, int i, int j) {
@@ -37,16 +49,14 @@ public class InsertSort {
         return true;
     }
 
-
-
     public static void main(String[] args) {
         int[] a = In.readInts();
         Integer[] A = new Integer[a.length];
         for (int i = 0; i < a.length; i++) {
             A[i] = a[i];
         }
-        InsertSort.sort(A);
-        assert InsertSort.isSorted(A);
-        InsertSort.show(A);
+        Quick3way.sort(A);
+        assert Quick3way.isSorted(A);
+        Quick3way.show(A);
     }
 }
