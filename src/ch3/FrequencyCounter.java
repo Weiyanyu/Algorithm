@@ -2,12 +2,13 @@ package ch3;
 
 import ch3.section1.BinarySearchST;
 import ch3.section1.SequentialSearchST;
+import edu.princeton.cs.algs4.BST;
 import edu.princeton.cs.algs4.StdIn;
 
 public class FrequencyCounter {
     public static void main(String[] args) {
         int minLen = Integer.parseInt(args[0]);
-        BinarySearchST<String, Integer> st = new BinarySearchST<>(1);
+        BST<String, Integer> st = new BST<>();
         while (!StdIn.isEmpty()) {
             String word = StdIn.readString();
             if (word.length() < minLen) continue;
