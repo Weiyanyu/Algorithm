@@ -34,4 +34,14 @@ public class TwoColor {
     public boolean isBipartite() {
         return isTwoColor;
     }
+
+    public static void main(String[] args) {
+        String fileName = args[0];
+        String delim = args[1];
+        SymbolGraph sg = new SymbolGraph(fileName, delim);
+
+        TwoColor twoColor = new TwoColor(sg.G());
+
+        System.out.println(twoColor.isBipartite());
+    }
 }
