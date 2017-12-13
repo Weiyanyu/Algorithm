@@ -1,18 +1,15 @@
-package ch4;
+package ch4.section2;
 
 import ch1.section3.Bag;
 import edu.princeton.cs.algs4.In;
 
-import javax.jws.soap.SOAPBinding;
-
-
-public class Graph {
+public class Digraph {
     private int V;
     private int E;
 
     private Bag<Integer>[] adj;
 
-    public Graph(int V) {
+    public Digraph(int V) {
         this.V = V;
         adj = (Bag<Integer>[]) new Bag[V];
         for (int i = 0; i < V; i++) {
@@ -20,15 +17,19 @@ public class Graph {
         }
     }
 
-    public Graph(In in) {
+    public Digraph(In in) {
         this(in.readInt());
         int E = in.readInt();
-
         for (int i = 0; i < E; i++) {
             int v = in.readInt();
             int w = in.readInt();
             addEdge(v, w);
         }
+    }
+
+    public void addEdge(int v, int w) {
+        adj[v].add(w);
+        E++;
     }
 
     public int V() {
@@ -39,19 +40,17 @@ public class Graph {
         return E;
     }
 
-    public void addEdge(int v, int w) {
-        adj[v].add(w);
-        adj[w].add(v);
-        E++;
-    }
-
     public Iterable<Integer> adj(int v) {
         return adj[v];
     }
 
-    public static void main(String[] args) {
-
-        Graph graph = new Graph(new In(args[0]));
-        System.out.println(graph.E());
+    public Digraph reverse() {
+        Digraph R = new Digraph(V);
+        for (int v = 0; v < V; v++) {
+            for (int w : adj[v]) {
+                R.addEdge(w, v);
+            }
+        }
+        return R;
     }
 }
