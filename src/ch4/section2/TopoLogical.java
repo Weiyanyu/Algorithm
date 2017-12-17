@@ -1,5 +1,9 @@
 package ch4.section2;
 
+import ch4.section4.EdgeWeightedDigraph;
+
+
+
 public class TopoLogical {
     private Iterable<Integer> order;
 
@@ -8,6 +12,14 @@ public class TopoLogical {
         if (!directedCycle.hasCycle()) {
             DepthFirstOrder depthFirstOrder = new DepthFirstOrder(G);
             order = depthFirstOrder.reversePost();
+        }
+    }
+
+    public TopoLogical(EdgeWeightedDigraph G) {
+        EdgeWeightedDirectedCycle cycle = new EdgeWeightedDirectedCycle(G);
+        if (!cycle.hasCycle()) {
+            DepthFirstOrder dfs = new DepthFirstOrder(G);
+            order = dfs.reversePost();
         }
     }
 
